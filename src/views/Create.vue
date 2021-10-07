@@ -39,7 +39,7 @@ const handleSubmit = async ()=>{
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(newpost)
       }
-  )
+  ).then(()=>{router.push({name:'Home'})}).catch(err=>console.log(err.message))
 }
 
 const handleKeyDown = ()=>{
