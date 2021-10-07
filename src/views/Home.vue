@@ -1,21 +1,15 @@
 <template>
   <div class="home">
-
     <h1>Home</h1>
-    <div v-if="error">
-      <h2>{{error}}</h2>
-    </div>
+    <div v-if="error">{{ error }}</div>
     <div v-if="posts.length">
-      <PostList v-if="showPosts"
-                :posts="posts"/>
-      <button @click="showPosts = !showPosts">Toggle posts</button>
+      <PostList :posts="posts" />
     </div>
-    <div v-else><Spinner/></div>
-
-
+    <div v-else>
+      <Spinner />
+    </div>
   </div>
 </template>
-
 <script setup>
 import Spinner from "@/components/Spinner";
 import {computed, reactive, ref, watch, watchEffect} from "vue";
@@ -30,3 +24,10 @@ const showPosts = ref(true)
 
 
 </script>
+<style>
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+</style>
