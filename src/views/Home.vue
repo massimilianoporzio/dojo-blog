@@ -1,33 +1,32 @@
 <template>
   <div class="home">
+
     <h1>Home</h1>
-    <input type="text" v-model="search">
-    <p>search term - {{ search }}</p>
-    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
-    <button @click="handleClick">Stop Watching</button>
+    <div v-if="error">
+      <h2>{{error}}</h2>
+    </div>
+    <div v-if="posts.length">
+      <PostList v-if="showPosts"
+                :posts="posts"/>
+      <button @click="showPosts = !showPosts">Toggle posts</button>
+    </div>
+    <div v-else><Spinner/></div>
+
+
   </div>
 </template>
 
 <script setup>
+import Spinner from "@/components/Spinner";
 import {computed, reactive, ref, watch, watchEffect} from "vue";
-const name= 'Home'
-const search = ref('')
-const stopWatch = watch(search,()=>{
-  console.log("WATCH")
-})
+import getPosts from "@/composables/getPosts";
+import PostList from "@/components/PostList";
+const name = 'Home'
 
-const handleClick = ()=>{
-  console.log('CLICK')
-  stopWatch()
-  stopWatchEffect()
-}
+const {posts,error,load} = getPosts()
+load()
 
-const stopWatchEffect=watchEffect(()=>{
-  console.log('watchEffect',search.value)
-})
-const names = ref(['mario', 'yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
-const matchingNames = computed(() => {
-  // return ['a', 'b', 'c']
-  return names.value.filter(name => name.includes(search.value))
-})
+const showPosts = ref(true)
+
+
 </script>
