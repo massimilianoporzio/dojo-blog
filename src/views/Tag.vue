@@ -5,6 +5,7 @@
       <PostList :posts="filterdPosts" />
       <TagCloud :posts="posts" />
     </div>
+    
     <div v-else>
       <Spinner />
     </div>
