@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { getFirestore } from "firebase/firestore"
+import {getFirestore, serverTimestamp} from "firebase/firestore"
 
 
 
@@ -20,3 +20,4 @@ initializeApp(firebaseConfig)
 //init firestore
 const projectFirestore = getFirestore(); //my "db"
 export {projectFirestore}
+

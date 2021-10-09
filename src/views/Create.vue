@@ -19,7 +19,8 @@
 
 import {ref} from "vue";
 import {useRouter} from "vue-router"
-
+import { collection, addDoc ,serverTimestamp } from "firebase/firestore";
+import {projectFirestore} from "@/firebase/config";
 const router = useRouter()
 
 const name = "Create"
@@ -28,20 +29,19 @@ const body = ref('')
 const tag = ref('')
 const tags = ref([])
 
-const handleSubmit = async ()=>{
+const handleSubmit = async ()=> {
   const newpost = {
     title: title.value,
     body: body.value,
-    tags: tags.value
+    tags: tags.value,
+    createdAt: serverTimestamp()
   }
-  await fetch("http://localhost:3000/posts",{
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(newpost)
-      }
-  ).then(()=>{router.push({name:'Home'})}).catch(err=>console.log(err.message))
-}
+  const res = await addDoc(collection(projectFirestore,"posts"),newpost)
+  // console.log(res)
+  router.push({name: 'Home'})
 
+
+}
 const handleKeyDown = ()=>{
   if(!tags.value.includes(tag.value)){
     tag.value = tag.value.replace(/\s/,'') /*remove whitespaces */

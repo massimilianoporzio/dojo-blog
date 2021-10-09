@@ -6,8 +6,8 @@
       <PostList :posts="posts" />
       <TagCloud :posts="posts"/>
     </div>
-    <div v-else>
-      <Spinner />
+    <div  v-if="loading">
+      <Spinner/>
     </div>
   </div>
 </template>
@@ -19,7 +19,10 @@ import PostList from "@/components/PostList";
 import TagCloud from "@/components/TagCloud";
 const name = 'Home'
 
-const {posts,error,load} = getPosts()
+
+
+const {posts,error,load,loading} = getPosts()
+
 load()
 
 const showPosts = ref(true)
